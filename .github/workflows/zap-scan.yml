@@ -14,8 +14,16 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Run ZAP baseline scan
-        uses: zaproxy/action-baseline@v0.7.0
+      - name: Run ZAP baseline scan (최신 버전)
+        uses: zaproxy/action-baseline@v0.11.0
         with:
-          target: 'https://www.moyeorak.cloud/'  # 여기에 배포된 URL 입력
-          fail_action: true  # 취약점 있으면 실패 처리 (선택)
+          target: 'https://www.moyeorak.cloud/'
+          fail_action: true
+          format: html
+          output: zap-report.html
+
+      - name: Upload ZAP Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: zap-html-report
+          path: zap-report.html
