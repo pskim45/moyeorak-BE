@@ -1,0 +1,21 @@
+name: OWASP ZAP Scan
+
+on:
+  push:
+    branches: [dev]
+  pull_request:
+    branches: [dev]
+
+jobs:
+  zap_scan:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Run ZAP baseline scan
+        uses: zaproxy/action-baseline@v0.7.0
+        with:
+          target: 'https://www.moyeorak.cloud/'  # 여기에 배포된 URL 입력
+          fail_action: true  # 취약점 있으면 실패 처리 (선택)
